@@ -6,6 +6,11 @@ ExternalProject_Add(gtest
     URL https://github.com/google/googletest/archive/release-1.11.0.zip
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
     INSTALL_COMMAND ""
+
+    # pass the super-project compiler and flags to the external project to avoid
+    # issues with name-mangling - thanks to https://stackoverflow.com/a/41916106/232452
+    CMAKE_ARGS -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+    	       -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
 )
 ExternalProject_Get_Property(gtest source_dir binary_dir)
 
